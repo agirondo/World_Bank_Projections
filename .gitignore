@@ -1,6 +1,2 @@
-**/.DS_Store
-**/*.ipynb_checkpoints/
-**/__pycache__
-.env
 test.ipynb
-dashboard1.pbix
+dashboard.pbix

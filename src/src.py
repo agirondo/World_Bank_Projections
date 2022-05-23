@@ -27,10 +27,6 @@ def get_df(data,p=1,d=0,q=1):
         if df.isnull().values.any():
             continue
         else:
-            '''train, test = df.value[:-2], df.value[-2:-1]
-            modelo=ARIMA(train,order=(p,d,q)).fit()
-            pred=modelo.predict(len(train)-1,len(train)-1)
-            error2019=test[0]-pred[0]'''
 
             train, test = df.value[:-6], df.value[-6:-1]
             modelo=ARIMA(train, order=(p,d,q)).fit()
