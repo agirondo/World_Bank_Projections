@@ -1,4 +1,4 @@
-# World_Bank_Projections
+# World Bank data Projections
 
 The propose of this proyect is to use World Bank's data to measure the impact of shocks such as teh covid-19 epidemic in each country using autoregresion based projections as the baseline. We choose a target year, make projections based on historical data and compare the result with the real value.
 
