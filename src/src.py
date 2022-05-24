@@ -17,12 +17,12 @@ def get_data(i,countries): # retrieves dictionary with country as key and datafr
             pass
     return data
 
-def get_df(data,p=1,d=0,q=1):
+def get_df(data,p,d,q,year):
     countries=data.keys()
-    resultado=pd.DataFrame(columns=['country','error2015_2019','error2020'])
+    resultado=pd.DataFrame(columns=['country',f'error{year-5}_{year-1}',f'error{year}'])
     for z in countries:
         
-        df=data[z].iloc[:2020]
+        df=data[z].iloc[:year]
         df=df.reindex(index=df.index[::-1])
         if df.isnull().values.any():
             continue
@@ -31,15 +31,15 @@ def get_df(data,p=1,d=0,q=1):
             train, test = df.value[:-6], df.value[-6:-1]
             modelo=ARIMA(train, order=(p,d,q)).fit()
             pred=modelo.predict(len(train)-5,len(train)-1)
-            pred.index=['2015','2016','2017','2018','2019']
-            error2015_2019=(pred-test).abs().sum()/len(pred) 
+            pred.index=[f'{year-5}',f'{year-4}',f'{year-3}',f'{year-2}',f'{year-1}']
+            error_before=(pred-test).abs().sum()/len(pred) 
 
             train, test = df.value[:-1], df.value[-1:]
             modelo=ARIMA(train, order=(p,d,q)).fit()
             pred=modelo.predict(len(train)-1,len(train)-1)
-            error2020=test[0]-pred[0]
+            error_target=test[0]-pred[0]
 
 
-            resultado=resultado.append({'country':z,'error2015_2019':error2015_2019,'error2020':error2020},ignore_index=True)
+            resultado=resultado.append({'country':z,f'error{year-5}_{year-1}':error_before,f'error{year}':error_target},ignore_index=True)
 
     return resultado
